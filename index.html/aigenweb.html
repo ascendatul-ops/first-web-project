@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atul cafe — Artisan Indian Café</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF4E8;
+    --warm-white: #FFF8F0;
+    --spice: #C4622D;
+    --spice-dark: #8B3E17;
+    --turmeric: #E8A820;
+    --cardamom: #4A5E3A;
+    --charcoal: #1E1A16;
+    --dust: #8C7B6B;
+    --border: rgba(196,98,45,0.18);
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-editorial: 'Cormorant Garamond', serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(250,244,232,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--spice-dark);
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { font-style: italic; color: var(--spice); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dust);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--spice); }
+  .nav-cta {
+    background: var(--spice);
+    color: #fff !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    color: var(--dust);
+  }
+  .nav-cta:hover { background: var(--spice-dark); color: #fff !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 50%, rgba(232,168,32,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 80% at 90% 20%, rgba(196,98,45,0.06) 0%, transparent 60%);
+  }
+  .hero-text { position: relative; }
+  .hero-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--spice);
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2rem; height: 1px;
+    background: var(--spice);
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--spice-dark);
+    margin-bottom: 1rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--spice);
+  }
+  .hero-subtitle {
+    font-family: var(--font-editorial);
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: var(--dust);
+    margin-bottom: 2.5rem;
+    max-width: 440px;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; }
+  .btn-primary {
+    background: var(--spice);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border: none;
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--spice-dark); transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--spice-dark);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    border-bottom: 1px solid var(--spice-dark);
+    padding-bottom: 1px;
+    transition: opacity 0.2s;
+  }
+  .btn-ghost:hover { opacity: 0.7; }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-plate {
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f0dfc0 0%, #e8c890 40%, #d4a855 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    box-shadow: 0 40px 80px rgba(139,62,23,0.18);
+  }
+  .hero-plate-inner {
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    background: #FFF8F0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem;
+    border: 8px solid rgba(196,98,45,0.12);
+  }
+  .hero-emoji { font-size: 5rem; line-height: 1; }
+  .hero-plate-label {
+    font-family: var(--font-editorial);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--spice-dark);
+    letter-spacing: 0.04em;
+  }
+  .floating-tag {
+    position: absolute;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.6rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  .tag-1 { top: 10%; left: -5%; }
+  .tag-2 { bottom: 15%; right: -8%; }
+  .tag-3 { top: 55%; left: -12%; }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--spice);
+    margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before { content: ''; width: 2rem; height: 1px; background: var(--spice); }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: var(--spice-dark);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-title em { font-style: italic; color: var(--spice); }
+
+  /* ── ABOUT STRIP ── */
+  .about-strip {
+    background: var(--charcoal);
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-strip .section-label { color: var(--turmeric); }
+  .about-strip .section-label::before { background: var(--turmeric); }
+  .about-strip .section-title { color: var(--warm-white); }
+  .about-text {
+    font-family: var(--font-editorial);
+    font-size: 1.18rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255,248,240,0.7);
+  }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    color: var(--turmeric);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label { font-size: 0.82rem; color: rgba(255,248,240,0.5); letter-spacing: 0.06em; }
+
+  /* ── MENU ── */
+  #menu { background: var(--warm-white); }
+  .menu-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 3rem; }
+  .menu-desc { color: var(--dust); max-width: 360px; }
+  .menu-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); align-self: flex-end; margin-bottom: 0; }
+  .tab-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--dust); padding: 0.8rem 1.5rem;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { color: var(--spice); border-bottom-color: var(--spice); }
+  .tab-btn:hover:not(.active) { color: var(--charcoal); }
+
+  .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .menu-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .menu-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(139,62,23,0.1); }
+  .menu-card-emoji { font-size: 2.4rem; margin-bottom: 1rem; display: block; }
+  .menu-card-name {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--spice-dark);
+    margin-bottom: 0.3rem;
+  }
+  .menu-card-desc { font-size: 0.85rem; color: var(--dust); margin-bottom: 1rem; line-height: 1.5; }
+  .menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .menu-price { font-weight: 500; color: var(--spice); font-size: 1.05rem; }
+  .menu-badge {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+  }
+  .badge-veg { background: rgba(74,94,58,0.1); color: var(--cardamom); }
+  .badge-spicy { background: rgba(196,98,45,0.1); color: var(--spice); }
+  .badge-popular { background: rgba(232,168,32,0.15); color: #7a5d00; }
+  .badge-new { background: rgba(139,62,23,0.1); color: var(--spice-dark); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── ORDER ── */
+  #order { background: var(--cream); }
+  .order-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+  .order-info-block { background: var(--charcoal); border-radius: 4px; padding: 2.5rem; color: var(--warm-white); }
+  .order-info-title { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .order-info-sub { color: rgba(255,248,240,0.55); font-size: 0.88rem; margin-bottom: 2rem; }
+  .order-option {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1rem 0; border-bottom: 1px solid rgba(255,248,240,0.08);
+  }
+  .order-option:last-child { border: none; }
+  .order-option-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .order-option-name { font-weight: 500; margin-bottom: 0.15rem; }
+  .order-option-desc { font-size: 0.82rem; color: rgba(255,248,240,0.5); }
+  .order-form { }
+  .form-title { font-family: var(--font-display); font-size: 1.6rem; color: var(--spice-dark); margin-bottom: 0.4rem; }
+  .form-subtitle { color: var(--dust); font-size: 0.9rem; margin-bottom: 2rem; }
+  .form-group { margin-bottom: 1.2rem; }
+  label { display: block; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dust); margin-bottom: 0.5rem; }
+  input, select, textarea {
+    width: 100%; padding: 0.75rem 1rem;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-family: var(--font-body); font-size: 0.95rem;
+    color: var(--charcoal);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--spice); }
+  textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .menu-select-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.5rem; }
+  .menu-checkbox {
+    display: flex; align-items: center; gap: 0.6rem;
+    background: var(--warm-white); border: 1px solid var(--border);
+    border-radius: 2px; padding: 0.6rem 0.8rem;
+    cursor: pointer; transition: border-color 0.15s;
+    font-size: 0.85rem;
+  }
+  .menu-checkbox:hover { border-color: var(--spice); }
+  .menu-checkbox input[type=checkbox] {
+    width: auto; padding: 0; margin: 0;
+    accent-color: var(--spice);
+  }
+  .submit-btn {
+    width: 100%; margin-top: 1.5rem;
+    background: var(--spice); color: #fff;
+    border: none; border-radius: 2px;
+    padding: 1rem; font-family: var(--font-body);
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .submit-btn:hover { background: var(--spice-dark); }
+  .success-msg {
+    display: none;
+    background: rgba(74,94,58,0.08); border: 1px solid rgba(74,94,58,0.25);
+    border-radius: 4px; padding: 1rem 1.2rem;
+    color: var(--cardamom); font-size: 0.9rem; margin-top: 1rem;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--charcoal); }
+  #contact .section-label { color: var(--turmeric); }
+  #contact .section-label::before { background: var(--turmeric); }
+  #contact .section-title { color: var(--warm-white); }
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; }
+  .contact-info { }
+  .contact-block { margin-bottom: 2.5rem; }
+  .contact-block-title { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--turmeric); margin-bottom: 0.6rem; }
+  .contact-block-val { font-family: var(--font-editorial); font-size: 1.2rem; font-weight: 300; color: var(--warm-white); }
+  .contact-block-val a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,248,240,0.2); }
+  .hours-grid { display: grid; gap: 0.4rem; }
+  .hours-row { display: flex; justify-content: space-between; font-size: 0.88rem; color: rgba(255,248,240,0.55); }
+  .hours-row strong { color: rgba(255,248,240,0.85); font-weight: 400; }
+  .contact-map-placeholder {
+    background: rgba(255,248,240,0.04); border: 1px solid rgba(255,248,240,0.08);
+    border-radius: 4px; height: 100%; min-height: 320px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.8rem; color: rgba(255,248,240,0.25);
+  }
+  .map-icon { font-size: 3rem; }
+  .map-addr { font-size: 0.85rem; text-align: center; line-height: 1.6; }
+  .social-row { display: flex; gap: 1rem; margin-top: 2rem; }
+  .social-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(255,248,240,0.15);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,248,240,0.45); font-size: 0.85rem;
+    cursor: pointer; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .social-btn:hover { border-color: var(--turmeric); color: var(--turmeric); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #120E0B; padding: 2rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo { font-family: var(--font-display); font-size: 1.1rem; color: rgba(255,248,240,0.4); }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,248,240,0.2); }
+
+  /* ── DECORATIVE ── */
+  .spice-divider {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+  .spice-divider::before, .spice-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .spice-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--spice); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero, .about-strip, .menu-header, .order-layout, .contact-layout { grid-template-columns: 1fr; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero-plate { width: 280px; height: 280px; }
+    .hero-plate-inner { width: 220px; height: 220px; }
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    .floating-tag { display: none; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Chaai <span>&</span> Co.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#order">Order</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Est. 2018 · New Delhi</div>
+    <h1 class="hero-title">Where <em>Spice</em><br>Meets Soul</h1>
+    <p class="hero-subtitle">Artisan chai, slow-cooked curries & wholesome Indian meals — served with warmth since 2018.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">Explore Menu</a>
+      <a href="#order" class="btn-ghost">Place an Order</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-plate">
+      <div class="hero-plate-inner">
+        <span class="hero-emoji">🍛</span>
+        <span class="hero-plate-label">Today's Special</span>
+      </div>
+    </div>
+    <div class="floating-tag tag-1">☕ 12 Chai Varieties</div>
+    <div class="floating-tag tag-2">🌿 100% Vegetarian Options</div>
+    <div class="floating-tag tag-3">⭐ 4.9 · 2,400 reviews</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about-strip" id="about">
+  <div>
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title" style="color:var(--warm-white)">Brewed with<br><em style="color:var(--turmeric)">Heritage</em></h2>
+    <p class="about-text" style="margin-top:1rem">From the chai stalls of Old Delhi to a refined café experience — we bring generations of flavour tradition to every cup and every plate. Every recipe is a love letter to Indian kitchens.</p>
+  </div>
+  <div class="about-stats">
+    <div><div class="stat-num">12+</div><div class="stat-label">Years of Recipes</div></div>
+    <div><div class="stat-num">80+</div><div class="stat-label">Menu Items</div></div>
+    <div><div class="stat-num">4.9★</div><div class="stat-label">Average Rating</div></div>
+    <div><div class="stat-num">Daily</div><div class="stat-label">Fresh Ingredients</div></div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-header">
+    <div>
+      <div class="section-label">Our Menu</div>
+      <h2 class="section-title">A Feast of <em>Flavours</em></h2>
+      <p class="menu-desc" style="margin-top:0.6rem">Every dish is crafted with farm-fresh ingredients and traditional spice blends passed down through generations.</p>
+    </div>
+    <div>
+      <div class="menu-tabs" id="menuTabs">
+        <button class="tab-btn active" data-tab="mains">Mains</button>
+        <button class="tab-btn" data-tab="breads">Breads</button>
+        <button class="tab-btn" data-tab="snacks">Snacks</button>
+        <button class="tab-btn" data-tab="drinks">Drinks</button>
+        <button class="tab-btn" data-tab="desserts">Desserts</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAINS -->
+  <div class="tab-panel active" id="tab-mains">
+    <div class="menu-grid">
+      <div class="menu-card">
+        <span class="menu-card-emoji">🍛</span>
+        <div class="menu-card-name">Dal Makhani</div>
+        <div class="menu-card-desc">Slow-cooked black lentils in a rich tomato-butter sauce, simmered overnight for deep flavour.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹220</span><span class="menu-badge badge-popular">⭐ Popular</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🥘</span>
+        <div class="menu-card-name">Butter Chicken</div>
+        <div class="menu-card-desc">Tender chicken in a velvety tomato-cream gravy with aromatic whole spices.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹320</span><span class="menu-badge badge-spicy">🌶 Mild Spice</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🍲</span>
+        <div class="menu-card-name">Palak Paneer</div>
+        <div class="menu-card-desc">Cottage cheese cubes in a vibrant spinach gravy spiced with cumin and garam masala.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹260</span><span class="menu-badge badge-veg">🌱 Veg</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🫕</span>
+        <div class="menu-card-name">Chicken Biryani</div>
+        <div class="menu-card-desc">Fragrant basmati rice layered with spiced chicken, saffron and caramelised onions.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹360</span><span class="menu-badge badge-popular">⭐ Popular</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🥗</span>
+        <div class="menu-card-name">Chole Bhature</div>
+        <div class="menu-card-desc">Spiced chickpea curry served with fluffy deep-fried bread — a North Indian classic.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹180</span><span class="menu-badge badge-veg">🌱 Veg</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🍱</span>
+        <div class="menu-card-name">Thali Set</div>
+        <div class="menu-card-desc">A complete meal — dal, sabzi, rice, roti, raita & dessert. Chef's rotating daily selection.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹420</span><span class="menu-badge badge-new">✦ Chef's Pick</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREADS -->
+  <div class="tab-panel" id="tab-breads">
+    <div class="menu-grid">
+      <div class="menu-card">
+        <span class="menu-card-emoji">🫓</span>
+        <div class="menu-card-name">Butter Naan</div>
+        <div class="menu-card-desc">Soft leavened bread baked in a clay tandoor, brushed with melted butter and garlic.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹60</span><span class="menu-badge badge-veg">🌱 Veg</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🫓</span>
+        <div class="menu-card-name">Stuffed Paratha</div>
+        <div class="menu-card-desc">Whole wheat flatbread filled with spiced potatoes or paneer, served with yoghurt and pickle.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹110</span><span class="menu-badge badge-popular">⭐ Popular</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🥙</span>
+        <div class="menu-card-name">Missi Roti</div>
+        <div class="menu-card-desc">Gram-flour flatbread with onion, coriander and ajwain — a rustic Rajasthani staple.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹70</span><span class="menu-badge badge-veg">🌱 Veg</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SNACKS -->
+  <div class="tab-panel" id="tab-snacks">
+    <div class="menu-grid">
+      <div class="menu-card">
+        <span class="menu-card-emoji">🥟</span>
+        <div class="menu-card-name">Samosa (2 pcs)</div>
+        <div class="menu-card-desc">Crispy pastry filled with spiced potato-pea stuffing, served with mint & tamarind chutney.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹80</span><span class="menu-badge badge-popular">⭐ Popular</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🧆</span>
+        <div class="menu-card-name">Vada Pav</div>
+        <div class="menu-card-desc">Mumbai's beloved street snack — spiced potato fritter in a soft pav with garlic chutney.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹90</span><span class="menu-badge badge-spicy">🌶 Spicy</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🍢</span>
+        <div class="menu-card-name">Paneer Tikka</div>
+        <div class="menu-card-desc">Marinated cottage cheese grilled in the tandoor with bell peppers and onions.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹220</span><span class="menu-badge badge-new">✦ New</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRINKS -->
+  <div class="tab-panel" id="tab-drinks">
+    <div class="menu-grid">
+      <div class="menu-card">
+        <span class="menu-card-emoji">☕</span>
+        <div class="menu-card-name">Masala Chai</div>
+        <div class="menu-card-desc">Our signature spiced tea with ginger, cardamom, cinnamon and star anise. Brewed fresh every hour.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹60</span><span class="menu-badge badge-popular">⭐ Signature</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🥛</span>
+        <div class="menu-card-name">Rose Lassi</div>
+        <div class="menu-card-desc">Chilled hand-whipped yoghurt blended with rose water, sugar and a touch of cardamom.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹120</span><span class="menu-badge badge-veg">🌱 Veg</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🧉</span>
+        <div class="menu-card-name">Jal Jeera</div>
+        <div class="menu-card-desc">Tangy cumin-spiced water with mint and black salt — a refreshing digestive cooler.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹70</span><span class="menu-badge badge-new">✦ Summer Special</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🫖</span>
+        <div class="menu-card-name">Kahwa Green Tea</div>
+        <div class="menu-card-desc">Kashmiri saffron, almonds and whole spices brewed with Himalayan green tea leaves.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹140</span><span class="menu-badge badge-new">✦ New</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESSERTS -->
+  <div class="tab-panel" id="tab-desserts">
+    <div class="menu-grid">
+      <div class="menu-card">
+        <span class="menu-card-emoji">🍮</span>
+        <div class="menu-card-name">Gulab Jamun</div>
+        <div class="menu-card-desc">Soft milk-solid dumplings soaked in a rose and cardamom sugar syrup. Served warm.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹120</span><span class="menu-badge badge-popular">⭐ Popular</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🍚</span>
+        <div class="menu-card-name">Kheer</div>
+        <div class="menu-card-desc">Slow-cooked rice pudding with saffron, pistachios and rose water. A timeless classic.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹130</span><span class="menu-badge badge-veg">🌱 Veg</span></div>
+      </div>
+      <div class="menu-card">
+        <span class="menu-card-emoji">🧁</span>
+        <div class="menu-card-name">Gajar Halwa</div>
+        <div class="menu-card-desc">Grated carrots slow-cooked in ghee and milk, flavoured with cardamom and topped with cashews.</div>
+        <div class="menu-card-footer"><span class="menu-price">₹150</span><span class="menu-badge badge-new">✦ Seasonal</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section id="order">
+  <div class="section-label">Place Your Order</div>
+  <h2 class="section-title">Dine In, <em>Takeaway</em> or Delivery</h2>
+
+  <div class="order-layout">
+    <div>
+      <div class="order-info-block">
+        <div class="order-info-title">How Would You Like to Order?</div>
+        <div class="order-info-sub">We're happy to serve you your way.</div>
+        <div class="order-option">
+          <div class="order-option-icon">🪑</div>
+          <div><div class="order-option-name">Dine In</div><div class="order-option-desc">Reserve a table and enjoy the full café atmosphere.</div></div>
+        </div>
+        <div class="order-option">
+          <div class="order-option-icon">🛍️</div>
+          <div><div class="order-option-name">Takeaway</div><div class="order-option-desc">Order ahead and collect from the counter in 20–30 mins.</div></div>
+        </div>
+        <div class="order-option">
+          <div class="order-option-icon">🛵</div>
+          <div><div class="order-option-name">Home Delivery</div><div class="order-option-desc">Delivered fresh to your door within 5 km radius.</div></div>
+        </div>
+        <div class="order-option">
+          <div class="order-option-icon">🎉</div>
+          <div><div class="order-option-name">Catering</div><div class="order-option-desc">Large orders for events, office gatherings and celebrations.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-form">
+      <div class="form-title">Quick Order Form</div>
+      <div class="form-subtitle">Fill in your details and we'll confirm your order shortly.</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fname">Your Name</label>
+          <input type="text" id="fname" placeholder="Priya Sharma">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="+91 98765 43210">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="otype">Order Type</label>
+        <select id="otype">
+          <option value="">Select order type</option>
+          <option>Dine In</option>
+          <option>Takeaway</option>
+          <option>Home Delivery</option>
+          <option>Catering</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Select Items (choose all that apply)</label>
+        <div class="menu-select-grid">
+          <label class="menu-checkbox"><input type="checkbox"> Dal Makhani</label>
+          <label class="menu-checkbox"><input type="checkbox"> Butter Chicken</label>
+          <label class="menu-checkbox"><input type="checkbox"> Palak Paneer</label>
+          <label class="menu-checkbox"><input type="checkbox"> Chicken Biryani</label>
+          <label class="menu-checkbox"><input type="checkbox"> Chole Bhature</label>
+          <label class="menu-checkbox"><input type="checkbox"> Masala Chai</label>
+          <label class="menu-checkbox"><input type="checkbox"> Samosa</label>
+          <label class="menu-checkbox"><input type="checkbox"> Thali Set</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="notes">Special Instructions</label>
+        <textarea id="notes" placeholder="Extra spicy? No onions? Allergies? Let us know..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitOrder()">Confirm Order →</button>
+      <div class="success-msg" id="orderSuccess">
+        🎉 Order received! We'll call you within 5 minutes to confirm. Thank you for choosing Chaai & Co.!
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Find Us &<br><em style="color:var(--turmeric)">Say Hello</em></h2>
+
+  <div class="contact-layout">
+    <div class="contact-info">
+      <div class="contact-block">
+        <div class="contact-block-title">Address</div>
+        <div class="contact-block-val">12, Hauz Khas Village<br>New Delhi – 110016</div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-title">Phone & Email</div>
+        <div class="contact-block-val"><a href="tel:+911123456789">+91 11 2345 6789</a><br><a href="mailto:hello@chaaiandco.in">hello@chaaiandco.in</a></div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-title">Opening Hours</div>
+        <div class="hours-grid">
+          <div class="hours-row"><strong>Monday – Friday</strong><span>7:00 am – 10:00 pm</span></div>
+          <div class="hours-row"><strong>Saturday</strong><span>8:00 am – 11:00 pm</span></div>
+          <div class="hours-row"><strong>Sunday</strong><span>9:00 am – 9:00 pm</span></div>
+        </div>
+      </div>
+      <div class="social-row">
+        <a href="#" class="social-btn" title="Instagram">📷</a>
+        <a href="#" class="social-btn" title="Facebook">📘</a>
+        <a href="#" class="social-btn" title="Twitter">🐦</a>
+        <a href="#" class="social-btn" title="Zomato">🍴</a>
+      </div>
+    </div>
+
+    <div class="contact-map-placeholder">
+      <div class="map-icon">📍</div>
+      <div class="map-addr" style="color:rgba(255,248,240,0.4)">12, Hauz Khas Village<br>New Delhi – 110016<br><br>
+        <span style="font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase">Google Maps Embed Goes Here</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Chaai & Co.</div>
+  <div class="footer-copy">© 2025 Chaai & Co. All rights reserved. Made with ❤️ in Delhi.</div>
+</footer>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Order submit
+  function submitOrder() {
+    const name = document.getElementById('fname').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const otype = document.getElementById('otype').value;
+    if (!name || !phone || !otype) {
+      alert('Please fill in your name, phone number and order type.');
+      return;
+    }
+    document.getElementById('orderSuccess').style.display = 'block';
+    document.querySelector('.submit-btn').textContent = '✓ Order Placed!';
+    document.querySelector('.submit-btn').style.background = 'var(--cardamom)';
+    document.querySelector('.submit-btn').disabled = true;
+  }
+
+  // Smooth reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.style.opacity = 1; });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.menu-card, .order-option, .contact-block').forEach(el => {
+    el.style.opacity = 0;
+    el.style.transition = 'opacity 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
